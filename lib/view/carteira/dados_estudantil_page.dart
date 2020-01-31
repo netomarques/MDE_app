@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mde_app/model/usuario.dart';
 
 class DadosEstudantil extends StatelessWidget {
   BuildContext _context;
+  Usuario _usuario;
+
+  DadosEstudantil(this._usuario);
 
   @override
   Widget build(BuildContext context) {

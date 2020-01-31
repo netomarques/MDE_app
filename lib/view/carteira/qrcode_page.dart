@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mde_app/model/usuario.dart';
 
 class DadosQrcode extends StatelessWidget {
+  Usuario _usuario;
+
+  DadosQrcode(this._usuario);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +19,7 @@ class DadosQrcode extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   _textoDados("Código de uso: ", Colors.greenAccent),
-                  _textoDados("NNZ39PXB", Colors.white70),
+                  _textoDados(_usuario.qrcode, Colors.white70),
                   Expanded(
                     child: _imagemQrcode(),
                   ),

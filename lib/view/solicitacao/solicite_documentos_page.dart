@@ -23,6 +23,7 @@ class SoliciteDocumentos extends StatefulWidget {
 class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
   var _formDocumentosKey;
 
+  File _imagemSelecionadaAux;
   File _fileFoto;
   File _fileFrenteRG;
   File _fileVersoRG;
@@ -42,40 +43,46 @@ class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            _imagemDocumento("Foto com fundo branco", _fileFoto, _onClickFoto),
-            SizedBox(height: 10),
-            _imagemDocumento("Frente do RG ou CNH", _fileFrenteRG, _onClickFrenteRG),
-            SizedBox(height: 10),
-            _imagemDocumento("Verso do RG ou CNH", _fileVersoRG, _onClickVersoRG),
-            SizedBox(height: 10),
+            _imagemDocumento("Foto com fundo branco", _onClickFoto, _fileFoto),
+            SizedBox(height: 30),
             _imagemDocumento(
-                "Comprovante de Matricula", _fileComprovanteMatricula, _onClickComprovanteMatricula),
-            SizedBox(height: 10),
+                "Frente do RG ou CNH", _onClickFrenteRG, _fileFrenteRG),
+            SizedBox(height: 30),
+            _imagemDocumento(
+                "Verso do RG ou CNH", _onClickVersoRG, _fileVersoRG),
+            SizedBox(height: 30),
+            _imagemDocumento("Comprovante de Matricula",
+                 _onClickComprovanteMatricula, _fileComprovanteMatricula),
+            SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 
-  _imagemDocumento(_text, _file, _onPressed) {
+  _imagemDocumento(text, onTap, file) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            _text,
-            style: TextStyle(fontSize: 16),
+            text,
+            style: TextStyle(fontSize: 16, color: Colors.green),
           ),
-          _file != null
-              ? Image.file(_file)
-              : Image.asset(
-                  "assets/images/camera.png",
-                  width: MediaQuery.of(context).size.width * 0.3,
-                ),
-          FloatingActionButton(
-            onPressed: _onPressed,
-            tooltip: "Selecioner uma imagem ou tirar foto",
-            child: Icon(Icons.camera),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: onTap,
+              child: file != null
+                  ? Image.file(file)
+                  : Image.asset(
+                "assets/images/camera.png",
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+            ),
+          ),
+          Text(
+            "Clique na imagem",
+            style: TextStyle(fontSize: 10),
           )
         ],
       ),
@@ -97,46 +104,44 @@ class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
     return _formDocumentosKey;
   }
 
-  void _onClickImage(_file) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    print(_file);
-    setState(() {
-      _file = image;
-    });
-
-    print(_file);
-  }
 
   void _onClickFoto() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _fileFoto = image;
-    });
+    if(image !=null){
+      setState(() {
+        _fileFoto = image;
+      });
+    }
   }
 
   void _onClickFrenteRG() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _fileFrenteRG = image;
-    });
+    if(image !=null){
+      setState(() {
+        _fileFrenteRG = image;
+      });
+    }
   }
 
   void _onClickVersoRG() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _fileVersoRG = image;
-    });
+    if(image !=null){
+      setState(() {
+        _fileVersoRG = image;
+      });
+    }
   }
 
   void _onClickComprovanteMatricula() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _fileComprovanteMatricula = image;
-    });
+    if(image !=null){
+      setState(() {
+        _fileComprovanteMatricula = image;
+      });
+    }
   }
 }

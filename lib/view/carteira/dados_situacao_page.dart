@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mde_app/model/usuario.dart';
 
 class DadosSituacao extends StatelessWidget {
   BuildContext _context;
+  Usuario _usuario;
+
+  DadosSituacao(this._usuario);
 
   @override
   Widget build(BuildContext context) {
     this._context = context;
+    var _dateFormat = DateFormat("MM/yyyy");
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -18,15 +24,15 @@ class DadosSituacao extends StatelessWidget {
               "Numero Carteira: ",
               Colors.greenAccent,
             ),
-            _textoDados("RSM24288/19", Colors.white70),
+            _textoDados(this._usuario.numeroCarteira/*"RSM24288/19"*/, Colors.white70),
           ),
           _cardDados(
             _textoDados("Validade: ", Colors.greenAccent),
-            _textoDados("02/2020", Colors.white70),
+            _textoDados(/*"02/2020"*/ _dateFormat.format(this._usuario.validade), Colors.white70),
           ),
           _cardDados(
             _textoDados("Situação: ", Colors.greenAccent),
-            _textoDados("Ativo", Colors.white70),
+            _textoDados(_usuario.situacao, Colors.white70),
           ),
           _cardObservacao(
             _textoDados("Observações: ", Colors.greenAccent),

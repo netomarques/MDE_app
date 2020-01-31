@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1065360347978",
+    "firebase_url": "https://mde-app-e25e5.firebaseio.com",
+    "project_id": "mde-app-e25e5",
+    "storage_bucket": "mde-app-e25e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065360347978:android:b5a86d0a5f1b39af8ae7b3",
+        "android_client_info": {
+          "package_name": "br.com.mde.mde_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065360347978-p4ndec76v53t9vr5bocth4c81kn4aqbm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.mde.mde_app",
+            "certificate_hash": "688245fa471f912afbf95b5c9bb894afe4913261"
+          }
+        },
+        {
+          "client_id": "1065360347978-lbbgmrlge289b4gdttjjs9ms45k0stou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgUBsaJZ9BQRsnXcgS0P8taCGiglkJbeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065360347978-lbbgmrlge289b4gdttjjs9ms45k0stou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

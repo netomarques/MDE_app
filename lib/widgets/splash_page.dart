@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:mde_app/firebase/firebase_service.dart';
 import 'package:mde_app/utils/nav.dart';
+import 'package:mde_app/view/carteira/carteira_page.dart';
 import 'package:mde_app/view/home_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -11,8 +13,23 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 7)).then((_) {
+
+    Future futureDelay = Future.delayed(Duration(seconds: 5));
+
+    Future<FirebaseUser> futureFirebase = FirebaseService().userFirebase();
+
+    /*Future.delayed(Duration(seconds: 7)).then((_) {
       push(context, HomePage(), replace: true);
+    });*/
+
+    Future.wait([futureDelay, futureFirebase]).then((List values) {
+      FirebaseUser user = values[1];
+
+      if(user != null) {
+        push(context, CarteiraPage(), replace: true);
+      } else {
+        push(context, HomePage(), replace: true);
+      }
     });
   }
 

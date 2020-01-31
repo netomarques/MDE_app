@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mde_app/model/usuario.dart';
 
 class DadosPessoais extends StatelessWidget {
   BuildContext _context;
+  Usuario _usuario;
+
+
+  DadosPessoais(this._usuario);
 
   @override
   Widget build(BuildContext context) {
     this._context = context;
+    var _dateFormat = DateFormat("MM/yyyy");
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -18,28 +25,28 @@ class DadosPessoais extends StatelessWidget {
               "Nome: ",
               Colors.greenAccent,
             ),
-            _textoDados("Ana Beatriz Pereira Medeiros aaaaaa ", Colors.white70),
+            _textoDados(_usuario.nome, Colors.white70),
           ),
           _cardFiliacao(
             _textoDados("Filiação: ", Colors.greenAccent),
-            _textoDados("Cristiane da S. Pereira Medeiros", Colors.white70),
-            _textoDados("Diego Magalhães Medeiros", Colors.white70),
-          ),
-          _cardDados(
-            _textoDados("CPF: ", Colors.greenAccent),
-            _textoDados("059.783.742-28", Colors.white70),
-          ),
-          _cardDados(
-            _textoDados("RG: ", Colors.greenAccent),
-            _textoDados("3700289-9", Colors.white70),
+            _textoDados(_usuario.mae, Colors.white70),
+            _textoDados(_usuario.pai, Colors.white70),
           ),
           _cardDados(
             _textoDados("Data de Nascimento: ", Colors.greenAccent),
-            _textoDados("28/01/2005", Colors.white70),
+            _textoDados(_dateFormat.format(_usuario.dtAniversario), Colors.white70),
+          ),
+          _cardDados(
+            _textoDados("CPF: ", Colors.greenAccent),
+            _textoDados(_usuario.cpf.toString(), Colors.white70),
+          ),
+          _cardDados(
+            _textoDados("RG: ", Colors.greenAccent),
+            _textoDados(_usuario.rg, Colors.white70),
           ),
           _cardDados(
             _textoDados("Expedido: ", Colors.greenAccent),
-            _textoDados("08/10/2019", Colors.white70),
+            _textoDados(_dateFormat.format(_usuario.dtExpedidoRG), Colors.white70),
           ),
         ],
       ),
