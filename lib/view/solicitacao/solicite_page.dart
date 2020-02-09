@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mde_app/view/solicitacao/solicite_dados_escolares_page.dart';
-import 'package:mde_app/view/solicitacao/solicite_dados_pessoais_page.dart';
-import 'package:mde_app/view/solicitacao/solicite_documentos_page.dart';
-import 'package:mde_app/widgets/app_text_formulario.dart';
+import 'package:mde_app/utils/alert.dart';
+import 'package:mde_app/utils/nav.dart';
+import 'package:mde_app/view/home/logo_mde_home_page.dart';
+import 'package:mde_app/view/home_page.dart';
+import 'package:mde_app/view/solicitacao/solicite_bloc.dart';
 
 class Solicite extends StatefulWidget {
   @override
@@ -10,20 +11,15 @@ class Solicite extends StatefulWidget {
 }
 
 class _SoliciteState extends State<Solicite> {
-
-  /*final _formDadosEscolaresKey = GlobalKey<FormState>();
-  final _formDadosPessoaisKey = GlobalKey<FormState>();*/
-
-  var _formAtual;
+  SoliciteBloc _bloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    _formAtual =  SoliciteDadosPessoais();
+    this._bloc = SoliciteBloc();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,159 +27,93 @@ class _SoliciteState extends State<Solicite> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("MDE - Solicite"),
+        leading: IconButton(
+          tooltip: 'Sair',
+          icon: const Icon(Icons.arrow_back),
+          onPressed: _sairDoformulario,
+        ),
       ),
       body: _body(),
     );
   }
 
   _body() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: Text(
-                  "Quais são os seus dados",
-                  style: TextStyle(color: Colors.green, fontSize: 22),
+    return WillPopScope(
+      onWillPop: _sairDoformulario,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    "Quais são os seus dados",
+                    style: TextStyle(color: Colors.green, fontSize: 22),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 9,
-              child: ListView(
-                children: <Widget>[
-                  _formAtual,
-                  _containerButtons(),
-                ],
+              Expanded(
+                flex: 9,
+                child: ListView(
+                  children: <Widget>[
+                    StreamBuilder(
+                        stream: this._bloc.streamController.stream,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return snapshot.data;
+                        }),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> _sairDoformulario() {
+     return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            title: Text("MDE"),
+            content: Text(
+                "Se você sair do formulário os dados preenchidos serão apagados! Deseja realmente sair do formulário?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("NÃO"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-            )
-          ],
-        ),
-      ),
+              FlatButton(
+                child: Text("sim"),
+                onPressed: () {
+                  push(context, HomePage(), replace: true);
+                },
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
-  _containerButtons() {
-    return Container(
-      margin: EdgeInsets.only(top: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _buttonVoltar(),
-          _buttonContinuar(),
-        ],
-      ),
-    );
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _bloc.dispose();
   }
-
-  _buttonContinuar() {
-    return Container(
-      height: 40,
-      width: 120,
-      child: RaisedButton(
-        shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        color: Colors.green,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              "Continuar",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-              size: 16,
-            ),
-          ],
-        ),
-        onPressed: _onClickContinuar,
-      ),
-    );
-  }
-
-  _buttonVoltar() {
-    return Container(
-      height: 40,
-      width: 120,
-      child: RaisedButton(
-        shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        color: Colors.green,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-              size: 16,
-            ),
-            Text(
-              "Voltar",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-        onPressed: _onClickVoltar,
-      ),
-    );
-  }
-
-  bool _validarCampos(formKey) {
-    if(formKey.currentState.validate()){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void _onClickContinuar(){
-    var form;
-    
-    if(! _validarCampos(_formAtual.formKey)){
-      return;
-    }
-
-    if(_formAtual.toString() == "Dados Pessoais"){
-      form = SoliciteDadosEscolares();
-    } else if(_formAtual.toString() == "Dados Escolares") {
-      form = SoliciteDocumentos();
-    } else if(_formAtual.toString() == "Documentos") {
-      return;
-    }
-
-    setState(() {
-      _formAtual = form;
-    });
-  }
-
-  void _onClickVoltar(){
-    var form;
-
-    if(_formAtual.toString() == "Documentos"){
-      form = SoliciteDadosEscolares();
-    } else if(_formAtual.toString() == "Dados Escolares"){
-      form = SoliciteDadosPessoais();
-    } else if(_formAtual.toString() == "Dados Pessoais") {
-      print("Ok ");
-      return;
-    }
-
-    setState(() {
-      _formAtual = form;
-    });
-  }
-
 }

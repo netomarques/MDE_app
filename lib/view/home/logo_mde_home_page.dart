@@ -44,7 +44,7 @@ class LogoMdeHome extends StatelessWidget {
           SizedBox(
             width: 50,
           ),
-          _buttons("Solicite", () => push(this._context, Solicite())),
+          _buttons("Solicite", () => push(this._context, Solicite(), replace: true)),
         ],
       ),
     );
