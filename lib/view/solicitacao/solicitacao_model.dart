@@ -1,7 +1,8 @@
 import 'dart:io';
 
-class Solicitacao{
+import 'package:mde_app/model/base_model.dart';
 
+class Solicitacao extends BaseModel {
   String _nome;
   String _email;
   String _telefone;
@@ -31,6 +32,50 @@ class Solicitacao{
   File _versoRgCnh;
   File _comprovanteMatricula;
   File _fotoCpf;
+
+  String _urlFoto;
+  String _urlVersoRgCnh;
+  String _urlFrenteRgCnh;
+  String _urlComprovanteMatricula;
+  String _urlFotoCpf;
+
+  @override
+  toMap() {
+    Map<String, dynamic> map = {
+      "nome": this._nome,
+      "cpf": this._cpf,
+      "dtAniversario": this._dtAniversario,
+      "rg": this._rg,
+      "dtExpedicaoRG": this._dtExpedidoRg,
+      "mae": this._nomeMae,
+      "pai": this._nomePai,
+      "email": this._email,
+      "instituicao": this._instituicao,
+      "curso": this._curso,
+      "matricula": this._matricula,
+      "sexo": this._sexo,
+      "semestre": this._semestre,
+      "telefone": this._telefone,
+      "rua": this._rua,
+      "numero": this._numero,
+      "cidade": this._cidade,
+      "estado": this._estado,
+      "cep": this._cep,
+      "turno": this._turno,
+      "aluno_professor": this._aluno_professor,
+      "foto": this._urlFoto,
+      "frente_rg_cnh": this._urlFrenteRgCnh,
+      "verso_rg_cnh": this._urlVersoRgCnh,
+      "comprovante_matricula": this._urlComprovanteMatricula,
+      "foto_cpf": this._urlFotoCpf
+    };
+
+    return map;
+  }
+
+  set urlFoto(String value) {
+    _urlFoto = value;
+  }
 
   String get nome => _nome;
 
@@ -188,4 +233,25 @@ class Solicitacao{
     _telefone = value;
   }
 
+  set urlVersoRgCnh(String value) {
+    _urlVersoRgCnh = value;
+  }
+
+  set urlFrenteRgCnh(String value) {
+    _urlFrenteRgCnh = value;
+  }
+
+  set urlComprovanteMatricula(String value) {
+    _urlComprovanteMatricula = value;
+  }
+
+  set urlFotoCpf(String value) {
+    _urlFotoCpf = value;
+  }
+
+  @override
+  String documentId() {
+    // TODO: implement documentId
+    return null;
+  }
 }

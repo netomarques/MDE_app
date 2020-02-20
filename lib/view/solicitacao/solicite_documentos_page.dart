@@ -33,21 +33,22 @@ class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
     _preecherCampos();
   }
 
-  _preecherCampos(){
-    if(widget._bloc.solicitacao.foto != null)
+  _preecherCampos() {
+    if (widget._bloc.solicitacao.foto != null)
       _streamFoto.add(widget._bloc.solicitacao.foto);
 
-    if(widget._bloc.solicitacao.frenteRgCnh != null)
+    if (widget._bloc.solicitacao.frenteRgCnh != null)
       _streamFrenteRG.add(widget._bloc.solicitacao.frenteRgCnh);
 
-    if(widget._bloc.solicitacao.versoRgCnh != null)
+    if (widget._bloc.solicitacao.versoRgCnh != null)
       _streamVersoRG.add(widget._bloc.solicitacao.versoRgCnh);
 
-    if(widget._bloc.solicitacao.fotoCpf != null)
+    if (widget._bloc.solicitacao.fotoCpf != null)
       _streamCpf.add(widget._bloc.solicitacao.fotoCpf);
 
-    if(widget._bloc.solicitacao.comprovanteMatricula != null)
-      _streamComprovanteMatricula.add(widget._bloc.solicitacao.comprovanteMatricula);
+    if (widget._bloc.solicitacao.comprovanteMatricula != null)
+      _streamComprovanteMatricula
+          .add(widget._bloc.solicitacao.comprovanteMatricula);
   }
 
   @override
@@ -177,14 +178,12 @@ class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
   Future<void> _abrirCamera(_stream) async {
     File _imagem = await ImagePicker.pickImage(source: ImageSource.camera);
     if (_imagem != null) _stream.add(_imagem);
-
     Navigator.pop(context);
   }
 
   Future<void> _abrirGaleria(_stream) async {
     File _imagem = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (_imagem != null) _stream.add(_imagem);
-
     Navigator.pop(context);
   }
 
@@ -213,7 +212,7 @@ class _SoliciteDocumentosState extends State<SoliciteDocumentos> {
       return;
     }
 
-    print("Continuaaaaaaaaaaaaar");
+    widget._bloc.continuarForm();
   }
 
   _onClickVoltar() {

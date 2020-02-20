@@ -23,7 +23,7 @@ class _SoliciteDadosPessoaisState extends State<SoliciteDadosPessoais> {
   var _dateFormat = DateFormat("dd/MM/yyyy");
   final _formKey = GlobalKey<FormState>();
 
-  /*final _tNome = TextEditingController(text: "JoseFina Silva");
+  final _tNome = TextEditingController(text: "JoseFina Silva");
   final _tEmail = TextEditingController(text: "Teste@gmail.com");
   final _tTelefone = MaskedTextController(
       text: "92999999999",
@@ -35,9 +35,9 @@ class _SoliciteDadosPessoaisState extends State<SoliciteDadosPessoais> {
       mask: '000.000.000-00',
       translator: {'0': new RegExp(r'[0-9]')});
   final _tNomeMae = TextEditingController(text: "JoseFina Silva Queiros");
-  final _tNomePai = TextEditingController(text: "Jose Silva Queiros");*/
+  final _tNomePai = TextEditingController(text: "Jose Silva Queiros");
 
-  final _tNome = TextEditingController();
+  /*final _tNome = TextEditingController();
   final _tEmail = TextEditingController();
   final _tTelefone = MaskedTextController(
       mask: '(00) 00000-0000',
@@ -47,7 +47,7 @@ class _SoliciteDadosPessoaisState extends State<SoliciteDadosPessoais> {
       mask: '000.000.000-00',
       translator: {'0': new RegExp(r'[0-9]')});
   final _tNomeMae = TextEditingController();
-  final _tNomePai = TextEditingController();
+  final _tNomePai = TextEditingController();*/
 
   @override
   void initState() {

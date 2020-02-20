@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mde_app/firebase/firebase_service.dart';
 import 'package:mde_app/utils/alert.dart';
 import 'package:mde_app/utils/nav.dart';
 import 'package:mde_app/view/home/logo_mde_home_page.dart';
@@ -113,7 +114,8 @@ class _SoliciteState extends State<Solicite> {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
+    FirebaseService().logout();
     _bloc.dispose();
+    super.dispose();
   }
 }

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class ButtonsFormulario extends StatelessWidget {
   Function _onPressedVoltar;
   Function _onPressedContinuar;
+  var textoVoltar;
+  var textoContinuar;
 
-  ButtonsFormulario(this._onPressedVoltar, this._onPressedContinuar);
+  ButtonsFormulario(this._onPressedVoltar, this._onPressedContinuar, {this.textoContinuar});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class ButtonsFormulario extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Text(
-              "Continuar",
+              this.textoContinuar != null ? this.textoContinuar : "Continuar",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

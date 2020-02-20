@@ -47,8 +47,8 @@ class Usuario extends BaseModel {
     this._curso = document.data["curso"];
     this._matricula = document.data["matricula"];
     this._qrcode =  document.data["qrcode"];
-    this._qrcodeImagem =  document.data["qrcode_imagem"].path;
-    this._foto = document.data["foto"].path;
+    this._qrcodeImagem =  document.data["qrcode_imagem"];
+    this._foto = document.data["foto"];
     this._numeroCarteira = document.data["numero_carteira"];
     this._situacao = document.data["situacao"];
     this._validade = DateTime.fromMillisecondsSinceEpoch(

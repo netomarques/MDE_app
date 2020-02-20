@@ -17,21 +17,21 @@ class SoliciteEndereco extends StatefulWidget {
 class _SoliciteEnderecoState extends State<SoliciteEndereco> {
   final _formKey = GlobalKey<FormState>();
 
-  /*final _tRua = TextEditingController(text: "Teste");
+  final _tRua = TextEditingController(text: "Teste");
   final _tNumero = TextEditingController(text: "Teste");
   final _tCidade = TextEditingController(text: "Teste");
   final _tEstado = TextEditingController(text: "Teste");
   final _tCep = MaskedTextController(
       text: "69090635",
       mask: '00000-000',
-      translator: {'0': new RegExp(r'[0-9]')});*/
+      translator: {'0': new RegExp(r'[0-9]')});
 
-  final _tRua = TextEditingController();
+  /*final _tRua = TextEditingController();
   final _tNumero = TextEditingController();
   final _tCidade = TextEditingController();
   final _tEstado = TextEditingController();
   final _tCep = MaskedTextController(
-      mask: '00000-000', translator: {'0': new RegExp(r'[0-9]')});
+      mask: '00000-000', translator: {'0': new RegExp(r'[0-9]')});*/
 
   @override
   void initState() {

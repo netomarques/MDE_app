@@ -25,6 +25,7 @@ dependencies:
   shared_preferences: ^0.5.6+1
   intl: ^0.16.1
   flutter_masked_text: ^0.8.0
+  file_utils: ^0.1.4
 
   #Firebase
   flutter_auth_buttons: ^0.6.0

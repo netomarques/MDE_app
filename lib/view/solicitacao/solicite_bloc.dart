@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:mde_app/view/solicitacao/solicitacao_model.dart';
+import 'package:mde_app/view/solicitacao/solicite_confirmar_dados_page.dart';
 import 'package:mde_app/view/solicitacao/solicite_dados_escolares_page.dart';
 import 'package:mde_app/view/solicitacao/solicite_dados_pessoais_page.dart';
 import 'package:mde_app/view/solicitacao/solicite_documentos_page.dart';
@@ -28,6 +29,12 @@ class SoliciteBloc {
 
   voltarForm() {
     switch (this._page) {
+      case "Confirmação de dados":
+        {
+          this._page = "Documentos";
+          this._streamController.add(SoliciteDocumentos(this));
+        }
+        break;
       case "Documentos":
         {
           this._page = "Dados Escolares";
@@ -67,6 +74,12 @@ class SoliciteBloc {
         {
           this._page = "Documentos";
           this._streamController.add(SoliciteDocumentos(this));
+        }
+        break;
+      case "Documentos":
+        {
+          this._page = "Confirmação de dados";
+          this._streamController.add(SoliciteConfirmarDados(this));
         }
         break;
     }

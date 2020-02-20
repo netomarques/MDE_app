@@ -6,10 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:mde_app/model/usuario.dart';
 import 'package:mde_app/utils/api_response.dart';
+import 'package:mde_app/view/solicitacao/solicitacao_model.dart';
 
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final Firestore _firestore = Firestore.instance;
 
   Future<ApiResponse> login(String email, String senha) async {
     try {
@@ -68,6 +70,7 @@ class FirebaseService {
 
       return ApiResponse.ok(result: usuarioLogado);
     } catch (e) {
+      print(e.toString());
       return ApiResponse.error(
           result: e, msg: "Não foi possivel carregar os dados");
     }
@@ -77,25 +80,61 @@ class FirebaseService {
     await _auth.signOut();
   }
 
-  getQrcodeUrl(DocumentReference document) async {
+  Future<ApiResponse> enviarSolicitacao(Solicitacao solicitacao) async {
     try {
-      String image;
+      print("Iniciado envio de solicitação");
 
-      print("------------------------");
+      await _auth.signInWithEmailAndPassword(email: "mdesolicitacoes@gmail.com", password: "123321");
+      print("Inicio de envio de arquivos");
 
-      StorageReference storageRef = _storage.ref();
-      StorageReference qrcode =
-          storageRef.child("/qrcode/${document.documentID}");
-      await qrcode.getDownloadURL().then((url) {
-        image = url;
-      });
+      solicitacao.urlFoto = await uploadFirebaseStorage(
+          solicitacao.foto, solicitacao.cpf, "foto");
+      solicitacao.urlFrenteRgCnh = await uploadFirebaseStorage(
+          solicitacao.frenteRgCnh, solicitacao.cpf, "frente_rg_cnh");
+      solicitacao.urlVersoRgCnh = await uploadFirebaseStorage(
+          solicitacao.versoRgCnh, solicitacao.cpf, "verso_rg_cnh");
+      solicitacao.urlComprovanteMatricula = await uploadFirebaseStorage(
+          solicitacao.comprovanteMatricula,
+          solicitacao.cpf,
+          "comprovante_matricula");
+      solicitacao.urlFotoCpf = await uploadFirebaseStorage(
+          solicitacao.fotoCpf, solicitacao.cpf, "cpf");
 
-      return image;
-      /*StorageReference reference = await _storage.getReferenceFromUrl("/qrcode/${document.documentID}");*/
+      /*solicitacao.urlFoto = "teste";
+      solicitacao.urlFrenteRgCnh = "teste";
+      solicitacao.urlVersoRgCnh = "teste";
+      solicitacao.urlComprovanteMatricula = "teste";
+      solicitacao.urlFotoCpf = "teste";*/
 
+      print("Documentos enviados");
+
+      CollectionReference _solicitacoes = _firestore.collection("solicitacoes");
+      await _solicitacoes
+          .document(solicitacao.cpf)
+          .setData(solicitacao.toMap());
+
+      print("Solicitação enviada");
+      return ApiResponse.ok();
+    } on PlatformException catch (e) {
+      print(e.toString());
+      logout();
+      return ApiResponse.error(msg: "Já existe uma solicitação vinculada ao cpf ${solicitacao.cpf}");
     } on Exception catch (e) {
-      print("ERRRRROOOO: ${e.toString()}");
-      return "OPS";
+      print(e.toString());
+      logout();
+      return ApiResponse.error(msg: "Erro: não identificado");
     }
+  }
+
+  Future<String> uploadFirebaseStorage(
+      File file, String cpf, String nomeArquivo) async {
+    final storageRef =
+        _storage.ref().child("/documentos/${cpf}/${nomeArquivo}");
+
+    final StorageTaskSnapshot task = await storageRef.putFile(file).onComplete;
+
+    final String url = await task.ref.getDownloadURL();
+    print(url);
+    return url;
   }
 }

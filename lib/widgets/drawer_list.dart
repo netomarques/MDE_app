@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mde_app/firebase/firebase_service.dart';
 import 'package:mde_app/utils/nav.dart';
+import 'package:mde_app/view/home_page.dart';
 import 'package:mde_app/view/login/login_page.dart';
 
 class DrawerList extends StatelessWidget {
@@ -96,6 +97,6 @@ class DrawerList extends StatelessWidget {
   _onClickLogout(BuildContext context) {
     FirebaseService().logout();
     Navigator.pop(context);
-    push(context, Login(), replace: true);
+    push(context, HomePage(), replace: true);
   }
 }

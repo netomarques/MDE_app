@@ -24,17 +24,17 @@ class _SoliciteDadosEscolaresState extends State<SoliciteDadosEscolares> {
 
   /*String _tipoUsuario;*/
 
-  /*final _tInstituicao = TextEditingController(text: "Teste");
+  final _tInstituicao = TextEditingController(text: "Teste");
   final _tCurso = TextEditingController(text: "Teste");
   final _tSemestre = TextEditingController(text: "Teste");
   final _tMatricula = TextEditingController(text: "Teste");
-  final _tTurno = TextEditingController(text: "Teste");*/
+  final _tTurno = TextEditingController(text: "Teste");
 
-  final _tInstituicao = TextEditingController();
+  /*final _tInstituicao = TextEditingController();
   final _tCurso = TextEditingController();
   final _tSemestre = TextEditingController();
   final _tMatricula = TextEditingController();
-  final _tTurno = TextEditingController();
+  final _tTurno = TextEditingController();*/
 
   @override
   void initState() {
